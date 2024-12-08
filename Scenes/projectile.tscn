@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://b5yhtjlp5gxoa"]
+
+[ext_resource type="Script" path="res://Scripts/projectile.gd" id="1_ldeuv"]
+[ext_resource type="Texture2D" uid="uid://qyglo8f47gvt" path="res://Assets/2D Dungeon Asset Pack_v5.2/character and tileset/Dungeon_item_props_v2.png" id="1_to4xl"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpfj4"]
+atlas = ExtResource("1_to4xl")
+region = Rect2(112, 16, 16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_swr2y"]
+radius = 5.18006
+
+[node name="Projectile" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_ldeuv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_kpfj4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_swr2y")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+autostart = true
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

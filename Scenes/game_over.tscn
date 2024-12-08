@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://llvolru1afkq"]
+
+[ext_resource type="Script" path="res://Utility/game_over.gd" id="1_hc6xv"]
+[ext_resource type="Texture2D" uid="uid://cu2rwawutid8r" path="res://Assets/istockphoto-1377481857-612x612.jpg" id="1_hjr6r"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hc6xv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2.17133, 1.85193)
+texture = ExtResource("1_hjr6r")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="RestartBtn" type="Button" parent="."]
+layout_mode = 2
+offset_left = -144.0
+offset_top = 160.0
+offset_right = -8.0
+offset_bottom = 200.0
+
+[node name="QuitBtn" type="Button" parent="."]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 160.0
+offset_right = 128.0
+offset_bottom = 200.0
+scale = Vector2(1.20323, 1.01899)
+
+[connection signal="pressed" from="RestartBtn" to="." method="_on_restart_btn_pressed"]
+[connection signal="pressed" from="QuitBtn" to="." method="_on_quit_btn_pressed"]

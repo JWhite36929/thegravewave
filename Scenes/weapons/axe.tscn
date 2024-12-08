@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://b3wasmqy3i8kw"]
+
+[ext_resource type="Script" path="res://Scripts/weapons/axe.gd" id="1_rybwr"]
+[ext_resource type="Texture2D" uid="uid://dh226i3oprl1j" path="res://Assets/Shikashi's Fantasy Icons Pack v2/#2 - Transparent Icons & Drop Shadow.png" id="2_mtc6i"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gslln"]
+atlas = ExtResource("2_mtc6i")
+region = Rect2(352, 160, 32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ekvyw"]
+size = Vector2(28.0316, 26.3631)
+
+[node name="Axe" type="Area2D"]
+top_level = true
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_rybwr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_gslln")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1.18188, 1.46398)
+shape = SubResource("RectangleShape2D_ekvyw")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true

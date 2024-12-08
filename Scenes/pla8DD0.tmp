@@ -1,0 +1,195 @@
+[gd_scene load_steps=17 format=3 uid="uid://yfre3c1yvao7"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_e2v5x"]
+[ext_resource type="Texture2D" uid="uid://c4jv3xcksr3y4" path="res://Assets/2D Dungeon Asset Pack_v5.2/Character_animation/priests_idle/priest3/v2/priest3_v2_1.png" id="1_ypw00"]
+[ext_resource type="Texture2D" uid="uid://dfogwklvgy5r2" path="res://Assets/2D Dungeon Asset Pack_v5.2/Character_animation/priests_idle/priest3/v2/priest3_v2_2.png" id="2_qtp6f"]
+[ext_resource type="Texture2D" uid="uid://cc3xliv2inq6i" path="res://Assets/2D Dungeon Asset Pack_v5.2/Character_animation/priests_idle/priest3/v2/priest3_v2_3.png" id="3_elgab"]
+[ext_resource type="Texture2D" uid="uid://bmjq78n01c450" path="res://Assets/2D Dungeon Asset Pack_v5.2/Character_animation/priests_idle/priest3/v2/priest3_v2_4.png" id="4_7w3p7"]
+[ext_resource type="PackedScene" uid="uid://blshpt71qtc5e" path="res://Utility/hurt_box.tscn" id="5_7bjv0"]
+[ext_resource type="Texture2D" uid="uid://dgf7pqyy008q8" path="res://Assets/exp_background.png" id="7_kkv87"]
+[ext_resource type="Texture2D" uid="uid://do33f3if202iu" path="res://Assets/exp_progress.png" id="8_ga10p"]
+[ext_resource type="Texture2D" uid="uid://b75ltgki2v8ms" path="res://Assets/heatlh-background.png" id="9_wjbqq"]
+[ext_resource type="Texture2D" uid="uid://37vpolgn6kfn" path="res://Assets/health-export.png" id="10_dy315"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y10mj"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_ypw00")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_qtp6f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_elgab")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_7w3p7")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5xhn"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_atsdq"]
+size = Vector2(16, 16)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_om87g"]
+radius = 136.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5ihi2"]
+radius = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q6glj"]
+
+[node name="Player" type="CharacterBody2D" groups=["player"]]
+position = Vector2(10, 3)
+scale = Vector2(2, 2)
+collision_mask = 3
+script = ExtResource("1_e2v5x")
+speed = null
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_y10mj")
+frame_progress = 0.21575
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_d5xhn")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="HurtBox" parent="." groups=["player"] instance=ExtResource("5_7bjv0")]
+collision_layer = 1
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+shape = SubResource("RectangleShape2D_atsdq")
+
+[node name="Attack" type="Node2D" parent="."]
+
+[node name="AxeTimer" type="Timer" parent="Attack"]
+unique_name_in_owner = true
+wait_time = 1.5
+
+[node name="AxeAttackTimer" type="Timer" parent="Attack/AxeTimer"]
+unique_name_in_owner = true
+wait_time = 0.075
+
+[node name="ShieldTimer" type="Timer" parent="Attack"]
+
+[node name="ShieldAttackTimer" type="Timer" parent="Attack/ShieldTimer"]
+wait_time = 1.5
+
+[node name="SwordTimer" type="Timer" parent="Attack"]
+
+[node name="SwordAttackTimer" type="Timer" parent="Attack/SwordTimer"]
+
+[node name="EnemyDetector" type="Area2D" parent="."]
+visible = false
+collision_layer = 4
+collision_mask = 4
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EnemyDetector"]
+shape = SubResource("CircleShape2D_om87g")
+
+[node name="GrabArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GrabArea"]
+shape = SubResource("CircleShape2D_5ihi2")
+
+[node name="CollectArea" type="Area2D" parent="."]
+visible = false
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollectArea"]
+shape = SubResource("CircleShape2D_q6glj")
+
+[node name="HUDLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="HUDLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1200.0
+offset_bottom = 650.0
+
+[node name="HealthBar" type="TextureProgressBar" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+self_modulate = Color(1, 1, 1, 0.392157)
+layout_mode = 0
+offset_left = 576.0
+offset_top = 352.0
+offset_right = 672.0
+offset_bottom = 362.0
+scale = Vector2(0.6, 0.6)
+value = 100.0
+texture_under = ExtResource("9_wjbqq")
+texture_progress = ExtResource("10_dy315")
+
+[node name="ExpBar" type="TextureProgressBar" parent="HUDLayer/HUD"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_under = ExtResource("7_kkv87")
+texture_progress = ExtResource("8_ga10p")
+
+[node name="LevelLabel" type="Label" parent="HUDLayer/HUD/ExpBar"]
+layout_mode = 0
+offset_left = 1058.0
+offset_top = 40.0
+offset_right = 1147.0
+offset_bottom = 63.0
+scale = Vector2(2, 2)
+text = "Level: 1"
+
+[node name="LevelUp" type="Panel" parent="HUDLayer/HUD"]
+layout_mode = 0
+offset_left = 496.0
+offset_top = 136.0
+offset_right = 796.0
+offset_bottom = 480.0
+
+[node name="LabelLevelUp" type="Label" parent="HUDLayer/HUD/LevelUp"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 50.0
+text = "Level up!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="UpgradeOptions" type="VBoxContainer" parent="HUDLayer/HUD/LevelUp"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 20.0
+offset_top = 80.0
+offset_right = 280.0
+offset_bottom = 140.0
+
+[node name="ClockLabel" type="Label" parent="HUDLayer/HUD"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 568.0
+offset_top = 56.0
+offset_right = 648.0
+offset_bottom = 98.0
+theme_override_font_sizes/font_size = 30
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+[connection signal="timeout" from="Attack/AxeTimer" to="." method="_on_axe_timer_timeout"]
+[connection signal="timeout" from="Attack/AxeTimer/AxeAttackTimer" to="." method="_on_axe_attack_timer_timeout"]
+[connection signal="body_entered" from="EnemyDetector" to="." method="_on_enemy_detector_body_entered"]
+[connection signal="body_exited" from="EnemyDetector" to="." method="_on_enemy_detector_body_exited"]
+[connection signal="area_entered" from="GrabArea" to="." method="_on_grab_area_area_entered"]
+[connection signal="area_entered" from="CollectArea" to="." method="_on_collect_area_area_entered"]
+
+[editable path="HurtBox"]

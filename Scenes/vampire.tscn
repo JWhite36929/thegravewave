@@ -1,0 +1,77 @@
+[gd_scene load_steps=12 format=3 uid="uid://ysbgwr5dowr"]
+
+[ext_resource type="Texture2D" uid="uid://b4fxri3wiy2j" path="res://Assets/2D Dungeon Asset Pack_v5.2/Character_animation/monsters_idle/vampire/v1/vampire_v1_1.png" id="1_d7jsx"]
+[ext_resource type="Script" path="res://Scenes/vampire.gd" id="1_rtpou"]
+[ext_resource type="Texture2D" uid="uid://b5nbqj21wtrwy" path="res://Assets/2D Dungeon Asset Pack_v5.2/Character_animation/monsters_idle/vampire/v1/vampire_v1_2.png" id="2_3p7t3"]
+[ext_resource type="Texture2D" uid="uid://b228etlcby4r0" path="res://Assets/2D Dungeon Asset Pack_v5.2/Character_animation/monsters_idle/vampire/v1/vampire_v1_3.png" id="3_okjss"]
+[ext_resource type="Texture2D" uid="uid://chsuf1oqeimpn" path="res://Assets/2D Dungeon Asset Pack_v5.2/Character_animation/monsters_idle/vampire/v1/vampire_v1_4.png" id="4_k82ye"]
+[ext_resource type="PackedScene" uid="uid://bexodbpciej6h" path="res://Utility/hit_box.tscn" id="5_2gg5s"]
+[ext_resource type="PackedScene" uid="uid://blshpt71qtc5e" path="res://Utility/hurt_box.tscn" id="6_gnpgw"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iahcs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_d7jsx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_3p7t3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_okjss")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_k82ye")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kjv72"]
+size = Vector2(13.7502, 30.5871)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqkq2"]
+size = Vector2(31.7095, 32.2708)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_htq4l"]
+size = Vector2(31.3653, 32.7032)
+
+[node name="Vampire" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 6
+script = ExtResource("1_rtpou")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_iahcs")
+frame = 1
+frame_progress = 0.12774
+
+[node name="HitBox" parent="." instance=ExtResource("5_2gg5s")]
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(1.20139, -0.533245)
+shape = SubResource("RectangleShape2D_kjv72")
+
+[node name="HurtBox" parent="." instance=ExtResource("6_gnpgw")]
+visible = false
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(-0.201698, 0.308605)
+shape = SubResource("RectangleShape2D_hqkq2")
+
+[node name="wallCollision" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(-0.296074, 0.373615)
+shape = SubResource("RectangleShape2D_htq4l")
+
+[node name="Timer" type="Timer" parent="wallCollision"]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+
+[editable path="HitBox"]
+[editable path="HurtBox"]

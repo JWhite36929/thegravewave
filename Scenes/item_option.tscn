@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://bplusahoha7sd"]
+
+[ext_resource type="Script" path="res://Scripts/item_option.gd" id="1_cgo0x"]
+[ext_resource type="Texture2D" uid="uid://dwicmr2lkhxki" path="res://Assets/Shikashi's Fantasy Icons Pack v2/#1 - Transparent Icons.png" id="2_vqddn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oss26"]
+atlas = ExtResource("2_vqddn")
+region = Rect2(352, 160, 32, 32)
+
+[node name="ItemOption" type="ColorRect"]
+custom_minimum_size = Vector2(260, 60)
+anchors_preset = -1
+anchor_right = 0.217
+anchor_bottom = 0.092
+offset_right = -0.400024
+offset_bottom = 0.199997
+color = Color(0.621524, 0.621524, 0.621524, 1)
+script = ExtResource("1_cgo0x")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 48.0
+offset_bottom = 48.0
+color = Color(0.00184107, 0.00184107, 0.00184107, 1)
+
+[node name="ItemIcon" type="TextureRect" parent="ColorRect"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = SubResource("AtlasTexture_oss26")
+
+[node name="LabelName" type="Label" parent="."]
+layout_mode = 0
+offset_left = 56.0
+offset_right = 96.0
+offset_bottom = 23.0
+text = "Axe"
+
+[node name="LabelDescription" type="Label" parent="."]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 24.0
+offset_right = 248.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 12
+text = "Description of Item"
+autowrap_mode = 3
+
+[node name="LabelLevel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 184.0
+offset_right = 256.0
+offset_bottom = 23.0
+text = "Level :"
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

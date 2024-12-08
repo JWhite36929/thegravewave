@@ -1,0 +1,81 @@
+[gd_scene load_steps=12 format=3 uid="uid://crnynrgodol58"]
+
+[ext_resource type="Script" path="res://Scripts/knife_skeleton.gd" id="1_njxaf"]
+[ext_resource type="Texture2D" uid="uid://bc2th4rsl0vq1" path="res://Assets/2D Dungeon Asset Pack_v5.2/Character_animation/monsters_idle/skeleton2/v1/skeleton2_v1_1.png" id="2_n2167"]
+[ext_resource type="Texture2D" uid="uid://uyt5qas3tks" path="res://Assets/2D Dungeon Asset Pack_v5.2/Character_animation/monsters_idle/skeleton2/v1/skeleton2_v1_2.png" id="3_t0l2g"]
+[ext_resource type="Texture2D" uid="uid://5587iwgikfyl" path="res://Assets/2D Dungeon Asset Pack_v5.2/Character_animation/monsters_idle/skeleton2/v1/skeleton2_v1_3.png" id="4_ttlf8"]
+[ext_resource type="Texture2D" uid="uid://d2kt1lqaysh8o" path="res://Assets/2D Dungeon Asset Pack_v5.2/Character_animation/monsters_idle/skeleton2/v1/skeleton2_v1_4.png" id="5_bi4j2"]
+[ext_resource type="PackedScene" uid="uid://blshpt71qtc5e" path="res://Utility/hurt_box.tscn" id="6_skr77"]
+[ext_resource type="PackedScene" uid="uid://bexodbpciej6h" path="res://Utility/hit_box.tscn" id="7_cvuuu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hxw74"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_n2167")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_t0l2g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ttlf8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_bi4j2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p1euy"]
+size = Vector2(32.1086, 32.2573)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_582s4"]
+size = Vector2(21.8517, 29.7302)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_io3gb"]
+size = Vector2(32.096, 31.8148)
+
+[node name="Knife_Skeleton" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 10
+script = ExtResource("1_njxaf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_hxw74")
+frame_progress = 0.711466
+
+[node name="HurtBox" parent="." instance=ExtResource("6_skr77")]
+visible = false
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(-0.0414505, 0.0507526)
+shape = SubResource("RectangleShape2D_p1euy")
+
+[node name="HitBox" parent="." instance=ExtResource("7_cvuuu")]
+collision_layer = 1
+collision_mask = 1
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+visible = false
+position = Vector2(-3.08879, -0.0235729)
+shape = SubResource("RectangleShape2D_582s4")
+
+[node name="wallCollision" type="CollisionShape2D" parent="."]
+position = Vector2(0.0087254, 0.00230782)
+shape = SubResource("RectangleShape2D_io3gb")
+
+[node name="Timer" type="Timer" parent="wallCollision"]
+wait_time = 15.0
+one_shot = true
+autostart = true
+
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+[connection signal="timeout" from="wallCollision/Timer" to="." method="_on_timer_timeout"]
+
+[editable path="HurtBox"]
+[editable path="HitBox"]

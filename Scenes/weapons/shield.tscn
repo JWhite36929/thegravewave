@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://decacoyoqhgdt"]
+
+[ext_resource type="Script" path="res://Scripts/weapons/shield.gd" id="1_i4phb"]
+[ext_resource type="Texture2D" uid="uid://dh226i3oprl1j" path="res://Assets/Shikashi's Fantasy Icons Pack v2/#2 - Transparent Icons & Drop Shadow.png" id="1_krwfa"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j5d7p"]
+atlas = ExtResource("1_krwfa")
+region = Rect2(0, 192, 32, 32)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o3nl7"]
+radius = 16.4224
+
+[node name="Shield" type="Area2D"]
+top_level = true
+collision_layer = 8
+collision_mask = 6
+script = ExtResource("1_i4phb")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_j5d7p")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_o3nl7")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(50.0847, 6.78983)
+collision_mask = 2
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

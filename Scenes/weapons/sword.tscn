@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvarvte5q4xbn"]
+
+[ext_resource type="Script" path="res://Scripts/weapons/sword.gd" id="1_hau2g"]
+[ext_resource type="Texture2D" uid="uid://dh226i3oprl1j" path="res://Assets/Shikashi's Fantasy Icons Pack v2/#2 - Transparent Icons & Drop Shadow.png" id="1_om6he"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rvypl"]
+atlas = ExtResource("1_om6he")
+region = Rect2(160, 160, 32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wiqrp"]
+size = Vector2(27.9433, 29.2677)
+
+[node name="Sword" type="Area2D"]
+top_level = true
+collision_layer = 8
+collision_mask = 4
+script = ExtResource("1_hau2g")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_rvypl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.680809, 1.92218)
+shape = SubResource("RectangleShape2D_wiqrp")
+
+[node name="Timer" type="Timer" parent="."]
